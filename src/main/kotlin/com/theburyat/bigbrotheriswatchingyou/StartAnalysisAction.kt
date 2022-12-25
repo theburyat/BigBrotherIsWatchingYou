@@ -6,6 +6,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actionSystem.EditorActionManager
 import com.theburyat.bigbrotheriswatchingyou.utils.IdeEventsUtils
 import com.theburyat.bigbrotheriswatchingyou.utils.LoggerUtils
+import com.theburyat.bigbrotheriswatchingyou.utils.PathUtils
 
 class StartAnalysisAction: AnAction() {
 
@@ -15,7 +16,8 @@ class StartAnalysisAction: AnAction() {
     }
 
     override fun actionPerformed(e: AnActionEvent) {
-        val logger = LoggerUtils.createLogger(this.javaClass.name)
+        val logFile = PathUtils.createTempFile()
+        val logger = LoggerUtils.createLogger(this.javaClass.name, logFile)
 
         val project = e.project!!
         val actionManager = ActionManager.getInstance()

@@ -6,11 +6,10 @@ import ch.qos.logback.classic.spi.ILoggingEvent
 import ch.qos.logback.core.FileAppender
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.nio.file.Path
 
 object LoggerUtils {
-    fun createLogger(name: String): Logger {
+    fun createLogger(name: String, file: Path): Logger {
         val lc = LoggerFactory.getILoggerFactory() as LoggerContext
         lc.reset()
 
@@ -20,7 +19,7 @@ object LoggerUtils {
         ple.context = lc
         ple.start()
         val fileAppender = FileAppender<ILoggingEvent>()
-        fileAppender.file = getLogFileName()
+        fileAppender.file = file.toString()
         fileAppender.encoder = ple
         fileAppender.context = lc
         fileAppender.start()
@@ -29,11 +28,5 @@ object LoggerUtils {
         logger.addAppender(fileAppender)
 
         return logger
-    }
-
-    private fun getLogFileName(): String {
-        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy_HH.mm.ss")
-        val currentTime = LocalDateTime.now().format(formatter)
-        return "/home/dburyanov/testlogs/log-${currentTime}.log"
     }
 }
