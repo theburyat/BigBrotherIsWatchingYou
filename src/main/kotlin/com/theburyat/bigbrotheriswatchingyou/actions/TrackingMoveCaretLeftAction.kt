@@ -1,11 +1,14 @@
-package com.theburyat.bigbrotheriswatchingyou.Actions
+package com.theburyat.bigbrotheriswatchingyou.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.MoveCaretLeftAction
+import org.slf4j.Logger
 
-class TrackingMoveCaretLeftAction: MoveCaretLeftAction() {
+class TrackingMoveCaretLeftAction(logger: Logger): MoveCaretLeftAction() {
+    private val _logger: Logger = logger
+
     override fun beforeActionPerformedUpdate(e: AnActionEvent) {
-        println("Caret moved left")
+        _logger.info("MoveCaretLeft")
         super.beforeActionPerformedUpdate(e)
     }
 }

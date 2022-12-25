@@ -1,15 +1,17 @@
-package com.theburyat.bigbrotheriswatchingyou.ActionHandlers
+package com.theburyat.bigbrotheriswatchingyou.actionHandlers
 
-import com.intellij.codeInsight.editorActions.CutHandler
+import com.intellij.codeInsight.editorActions.BackspaceHandler
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
+import org.slf4j.Logger
 
-class TrackingCutHandler(originalHandler: EditorActionHandler?) : CutHandler(originalHandler) {
+class TrackingBackspaceHandler(originalHandler: EditorActionHandler?, logger: Logger) : BackspaceHandler(originalHandler) {
+    private val _logger: Logger = logger
+
     override fun doExecute(editor: Editor, caret: Caret?, dataContext: DataContext?) {
-        val project = editor.project
-        println("Sth was cut")
+        _logger.info("Delete")
         super.doExecute(editor, caret, dataContext)
     }
 }

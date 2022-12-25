@@ -1,11 +1,14 @@
-package com.theburyat.bigbrotheriswatchingyou.Actions
+package com.theburyat.bigbrotheriswatchingyou.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.MoveCaretUpAction
+import org.slf4j.Logger
 
-class TrackingMoveCaretUpAction: MoveCaretUpAction() {
+class TrackingMoveCaretUpAction(logger: Logger): MoveCaretUpAction() {
+    private val _logger: Logger = logger
+
     override fun beforeActionPerformedUpdate(e: AnActionEvent) {
-        println("Caret moved up")
+        _logger.info("Select")
         super.beforeActionPerformedUpdate(e)
     }
 }

@@ -1,15 +1,17 @@
-package com.theburyat.bigbrotheriswatchingyou.ActionHandlers
+package com.theburyat.bigbrotheriswatchingyou.actionHandlers
 
-import com.intellij.codeInsight.editorActions.CopyHandler
+import com.intellij.codeInsight.editorActions.EnterHandler
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
+import org.slf4j.Logger
 
+class TrackingEnterHandler(originalHandler: EditorActionHandler?, logger: Logger) : EnterHandler(originalHandler) {
+    private val _logger: Logger = logger
 
-class TrackingCopyHandler(originalHandler: EditorActionHandler?) : CopyHandler(originalHandler) {
     override fun doExecute(editor: Editor, caret: Caret?, dataContext: DataContext?) {
-        println("Sht was copied")
+        _logger.info("Enter")
         super.doExecute(editor, caret, dataContext)
     }
 }

@@ -1,16 +1,15 @@
-package com.theburyat.bigbrotheriswatchingyou.Listeners
+package com.theburyat.bigbrotheriswatchingyou.listeners
 
 import com.intellij.codeInsight.lookup.Lookup
 import com.intellij.codeInsight.lookup.LookupManagerListener
-import com.intellij.openapi.project.Project
+import org.slf4j.Logger
 
-class TrackingLookUpManagerListener(project: Project): LookupManagerListener {
-
-    private val _project: Project = project
+class TrackingLookUpManagerListener(logger: Logger): LookupManagerListener {
+    private val _logger: Logger = logger
 
     override fun activeLookupChanged(oldLookup: Lookup?, newLookup: Lookup?) {
         if (oldLookup != null && (oldLookup.isSelectionTouched)) {
-            println("Code was autocompleted")
+            _logger.info("CompleteCode")
         }
     }
 }

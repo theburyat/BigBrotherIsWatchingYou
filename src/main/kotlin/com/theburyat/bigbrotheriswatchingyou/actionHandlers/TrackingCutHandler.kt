@@ -1,14 +1,17 @@
-package com.theburyat.bigbrotheriswatchingyou.ActionHandlers
+package com.theburyat.bigbrotheriswatchingyou.actionHandlers
 
+import com.intellij.codeInsight.editorActions.CutHandler
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
-import com.intellij.openapi.editor.actions.DeleteSelectionHandler
+import org.slf4j.Logger
 
-class TrackingDeleteHandler(handler: EditorActionHandler?) : DeleteSelectionHandler(handler) {
+class TrackingCutHandler(originalHandler: EditorActionHandler?, logger: Logger) : CutHandler(originalHandler) {
+    private val _logger: Logger = logger
+
     override fun doExecute(editor: Editor, caret: Caret?, dataContext: DataContext?) {
-        println("Sth was deleted")
+        _logger.info("Cut")
         super.doExecute(editor, caret, dataContext)
     }
 }

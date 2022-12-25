@@ -1,11 +1,14 @@
-package com.theburyat.bigbrotheriswatchingyou.Actions
+package com.theburyat.bigbrotheriswatchingyou.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.PageDownWithSelectionAction
+import org.slf4j.Logger
 
-class TrackingPageDownWithSelectionAction: PageDownWithSelectionAction() {
+class TrackingPageDownWithSelectionAction(logger: Logger): PageDownWithSelectionAction() {
+    private val _logger: Logger = logger
+
     override fun beforeActionPerformedUpdate(e: AnActionEvent) {
-        println("Sth was selected")
+        _logger.info("Select")
         super.beforeActionPerformedUpdate(e)
     }
 }

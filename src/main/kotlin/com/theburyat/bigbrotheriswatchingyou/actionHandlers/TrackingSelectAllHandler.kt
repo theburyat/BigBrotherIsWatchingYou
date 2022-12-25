@@ -1,14 +1,17 @@
-package com.theburyat.bigbrotheriswatchingyou.ActionHandlers
+package com.theburyat.bigbrotheriswatchingyou.actionHandlers
 
 import com.intellij.codeInsight.template.impl.editorActions.SelectAllHandler
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
+import org.slf4j.Logger
 
-class TrackingSelectAllHandler(originalHandler: EditorActionHandler?) : SelectAllHandler(originalHandler) {
+class TrackingSelectAllHandler(originalHandler: EditorActionHandler?, logger: Logger) : SelectAllHandler(originalHandler) {
+    private val _logger: Logger = logger
+
     override fun doExecute(editor: Editor, caret: Caret?, dataContext: DataContext?) {
-        println("Sth was selected")
+        _logger.info("Select")
         super.doExecute(editor, caret, dataContext)
     }
 }
