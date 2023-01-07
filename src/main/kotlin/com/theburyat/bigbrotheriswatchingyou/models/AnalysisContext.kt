@@ -21,7 +21,8 @@ object AnalysisContext {
         var state: AnalysisState
     )
 
-    lateinit var currentContext: Context
+    private lateinit var currentContext: Context
+
     lateinit var originalTypeHandler: TypedActionHandler
     lateinit var messageBusConnection: MessageBusConnection
 
