@@ -5,6 +5,7 @@ import com.intellij.openapi.editor.actionSystem.EditorActionHandler
 import com.intellij.openapi.editor.actionSystem.TypedActionHandler
 import com.intellij.openapi.project.Project
 import com.intellij.util.messages.MessageBusConnection
+import com.theburyat.bigbrotheriswatchingyou.MessageConstants
 import com.theburyat.bigbrotheriswatchingyou.enums.AnalysisState
 import com.theburyat.bigbrotheriswatchingyou.utils.LoggerUtils
 import com.theburyat.bigbrotheriswatchingyou.utils.PathUtils
@@ -24,12 +25,13 @@ object AnalysisContext {
     lateinit var originalTypeHandler: TypedActionHandler
     lateinit var messageBusConnection: MessageBusConnection
 
+    var studentInfo: StudentInfo = StudentInfo()
     var originalHandlers: MutableMap<String, EditorActionHandler> = mutableMapOf()
     var originalActions: MutableMap<String, AnAction> = mutableMapOf()
 
     operator fun get(project: Project): Context {
         if (project.isDisposed)
-            throw IllegalStateException("Project is disposed")
+            throw IllegalStateException(MessageConstants.disposedProjectMessage)
 
         if (!::currentContext.isInitialized || isDropped())
             currentContext = Context(project, null, null, AnalysisState.DISABLED)
@@ -39,7 +41,7 @@ object AnalysisContext {
 
     fun startAnalysis(project: Project) {
         val logFile = PathUtils.createTempFile()
-        currentContext = Context(project, LoggerUtils.createLogger("Big Brother", logFile), logFile, AnalysisState.RUNNING)
+        currentContext = Context(project, LoggerUtils.createLogger(MessageConstants.loggerName, logFile), logFile, AnalysisState.RUNNING)
     }
 
     fun stopAnalysis() {
@@ -49,6 +51,8 @@ object AnalysisContext {
         currentContext.state = AnalysisState.DISABLED
 
         originalHandlers.clear()
+        originalActions.clear()
+        studentInfo.clear()
     }
 
     private fun isDropped(): Boolean {
@@ -56,5 +60,8 @@ object AnalysisContext {
                 && currentContext.logger == null
                 && currentContext.logFile == null
                 && currentContext.state == AnalysisState.DISABLED
+                && originalActions.isEmpty()
+                && originalHandlers.isEmpty()
+                && studentInfo.isEmpty()
     }
 }
