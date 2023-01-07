@@ -32,12 +32,18 @@
     </extensions>
 
     <actions>
-        <action id="com.theburyat.bigbrotheriswatchingyou.StartAnalysisAction"
-                class="com.theburyat.bigbrotheriswatchingyou.StartAnalysisAction"
-                text="Start analysis"
-                description="Activate plugin to analize user actions for plagiarism">
+        <action id="com.theburyat.bigbrotheriswatchingyou.actions.FinishAnalysisAction"
+                class="com.theburyat.bigbrotheriswatchingyou.actions.FinishAnalysisAction"
+                text="Finish Analysis"
+                description="Disable checking user actions for plagiarism detection">
             <add-to-group group-id="ToolsMenu" anchor="first"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl QUOTE" second-keystroke="S"/>
+        </action>
+
+        <action id="com.theburyat.bigbrotheriswatchingyou.actions.StartAnalysisAction"
+                class="com.theburyat.bigbrotheriswatchingyou.actions.StartAnalysisAction"
+                text="Start Analysis"
+                description="Activate plugin to analyze user actions for plagiarism">
+            <add-to-group group-id="ToolsMenu" anchor="first"/>
         </action>
     </actions>
 

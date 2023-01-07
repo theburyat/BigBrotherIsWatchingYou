@@ -1,5 +1,6 @@
 package com.theburyat.bigbrotheriswatchingyou.utils
 
+import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.classic.encoder.PatternLayoutEncoder
 import ch.qos.logback.classic.spi.ILoggingEvent
@@ -25,6 +26,7 @@ object LoggerUtils {
         fileAppender.start()
 
         val logger = LoggerFactory.getLogger(name) as ch.qos.logback.classic.Logger
+        logger.level = Level.INFO
         logger.addAppender(fileAppender)
 
         return logger
