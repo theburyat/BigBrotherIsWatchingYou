@@ -11,7 +11,7 @@ class TrackingTypedHandler(originalHandler: TypedActionHandler, logger: Logger) 
     private val _logger: Logger = logger
 
     override fun execute(editor: Editor, charTyped: Char, dataContext: DataContext) {
-        _logger.info("Type $charTyped")
+        _logger.info("Type \"$charTyped\"")
         _originalHandler.execute(editor, charTyped, dataContext)
     }
 }
