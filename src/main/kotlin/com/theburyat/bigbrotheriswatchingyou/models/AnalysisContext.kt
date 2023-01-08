@@ -9,8 +9,9 @@ import com.theburyat.bigbrotheriswatchingyou.MessageConstants
 import com.theburyat.bigbrotheriswatchingyou.enums.AnalysisState
 import com.theburyat.bigbrotheriswatchingyou.utils.LoggerUtils
 import com.theburyat.bigbrotheriswatchingyou.utils.PathUtils
-import org.slf4j.Logger
 import java.nio.file.Path
+import java.util.logging.LogManager
+import java.util.logging.Logger
 
 object AnalysisContext {
 
@@ -54,6 +55,8 @@ object AnalysisContext {
         originalHandlers.clear()
         originalActions.clear()
         studentInfo.clear()
+
+        LogManager.getLogManager().reset()
     }
 
     private fun isDropped(): Boolean {

@@ -2,7 +2,7 @@ package com.theburyat.bigbrotheriswatchingyou.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.PageUpWithSelectionAction
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 class TrackingPageUpWithSelectionAction(logger: Logger): PageUpWithSelectionAction() {
     private val _logger: Logger = logger

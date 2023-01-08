@@ -5,7 +5,7 @@ import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 class TrackingEnterHandler(originalHandler: EditorActionHandler?, logger: Logger) : EnterHandler(originalHandler) {
     private val _logger: Logger = logger
