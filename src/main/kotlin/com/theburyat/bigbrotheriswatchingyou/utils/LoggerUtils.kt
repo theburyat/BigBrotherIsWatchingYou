@@ -1,33 +1,23 @@
 package com.theburyat.bigbrotheriswatchingyou.utils
 
-import ch.qos.logback.classic.Level
-import ch.qos.logback.classic.LoggerContext
-import ch.qos.logback.classic.encoder.PatternLayoutEncoder
-import ch.qos.logback.classic.spi.ILoggingEvent
-import ch.qos.logback.core.FileAppender
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.nio.file.Path
+import java.util.logging.FileHandler
+import java.util.logging.Level
+import java.util.logging.Logger
+import java.util.logging.SimpleFormatter
 
 object LoggerUtils {
     fun createLogger(name: String, file: Path): Logger {
-        val lc = LoggerFactory.getILoggerFactory() as LoggerContext
-        lc.reset()
+        System.setProperty("java.util.logging.SimpleFormatter.format", "%1\$tF_%1\$tT %5\$s%n")
 
-        val ple = PatternLayoutEncoder()
+        val fileHandler = FileHandler(file.toString())
+        fileHandler.formatter = SimpleFormatter()
+        fileHandler.level = Level.INFO
 
-        ple.pattern = "%d{dd.MM.yyyy HH:mm:ss}-%msg%n"
-        ple.context = lc
-        ple.start()
-        val fileAppender = FileAppender<ILoggingEvent>()
-        fileAppender.file = file.toString()
-        fileAppender.encoder = ple
-        fileAppender.context = lc
-        fileAppender.start()
-
-        val logger = LoggerFactory.getLogger(name) as ch.qos.logback.classic.Logger
+        val logger = Logger.getLogger(name)
         logger.level = Level.INFO
-        logger.addAppender(fileAppender)
+        logger.addHandler(fileHandler)
+        logger.handlers.filter { x -> x == fileHandler }
 
         return logger
     }

@@ -4,7 +4,7 @@ import com.intellij.codeInsight.template.impl.editorActions.TypedActionHandlerBa
 import com.intellij.openapi.actionSystem.DataContext
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.TypedActionHandler
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 class TrackingTypedHandler(originalHandler: TypedActionHandler, logger: Logger) : TypedActionHandlerBase(originalHandler) {
     private val _originalHandler: TypedActionHandler = originalHandler

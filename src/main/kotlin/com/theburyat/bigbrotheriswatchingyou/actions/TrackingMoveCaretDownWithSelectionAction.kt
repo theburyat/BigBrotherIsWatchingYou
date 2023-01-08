@@ -2,7 +2,7 @@ package com.theburyat.bigbrotheriswatchingyou.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.MoveCaretDownWithSelectionAction
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 class TrackingMoveCaretDownWithSelectionAction(logger: Logger): MoveCaretDownWithSelectionAction() {
     private val _logger: Logger = logger

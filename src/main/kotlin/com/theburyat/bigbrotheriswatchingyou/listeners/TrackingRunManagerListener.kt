@@ -4,7 +4,7 @@ import com.intellij.execution.ExecutionListener
 import com.intellij.execution.process.ProcessHandler
 import com.intellij.execution.runners.ExecutionEnvironment
 import org.jetbrains.annotations.NotNull
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 const val BuildStageName = "Build"
 

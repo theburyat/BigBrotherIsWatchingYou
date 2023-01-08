@@ -11,7 +11,7 @@ import com.theburyat.bigbrotheriswatchingyou.actions.*
 import com.theburyat.bigbrotheriswatchingyou.listeners.TrackingLookUpManagerListener
 import com.theburyat.bigbrotheriswatchingyou.listeners.TrackingRunManagerListener
 import com.theburyat.bigbrotheriswatchingyou.models.AnalysisContext
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 object IdeEventsUtils {
 

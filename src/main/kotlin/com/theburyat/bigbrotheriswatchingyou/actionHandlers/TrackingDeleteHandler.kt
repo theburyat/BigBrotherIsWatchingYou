@@ -5,7 +5,7 @@ import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
 import com.intellij.openapi.editor.actions.DeleteSelectionHandler
-import org.slf4j.Logger
+import java.util.logging.Logger
 
 class TrackingDeleteHandler(handler: EditorActionHandler?, logger: Logger) : DeleteSelectionHandler(handler) {
     private val _logger: Logger = logger
