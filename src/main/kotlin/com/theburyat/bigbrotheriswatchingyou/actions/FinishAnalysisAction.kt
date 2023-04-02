@@ -25,7 +25,7 @@ class FinishAnalysisAction: AnAction() {
 
         IdeEventsUtils.disableActionsLogging(actionManager, editorActionManager)
 
-        val isLogsSent = HttpUtils.trySendLogsToServer()
+        /*val isLogsSent = HttpUtils.trySendLogsToServer()
         if (!isLogsSent) {
             Messages.showMessageDialog(
                 e.project,
@@ -33,7 +33,7 @@ class FinishAnalysisAction: AnAction() {
                 MessageConstants.ERROR_CAN_NOT_SEND_LOGS_TITLE,
                 Messages.getErrorIcon()
             )
-        }
+        }*/
 
         AnalysisProcess.stopAnalysis()
     }

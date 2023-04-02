@@ -1,6 +1,6 @@
 package com.theburyat.bigbrotheriswatchingyou.utils
 
-import com.theburyat.bigbrotheriswatchingyou.models.AnalysisContext
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.time.LocalDateTime
@@ -14,7 +14,7 @@ object PathUtils {
 
         val currentDate = LocalDateTime.now().format(formatter)
 
-        val file = Paths.get(homeDirectory, "${currentDate}-${AnalysisContext.studentInfo.name}.log").toFile()
+        val file = Paths.get(homeDirectory, "${currentDate}-${AnalysisProcess.studentInfo.name}.log").toFile()
         if (file.createNewFile()) {
             return file.toPath()
         }
