@@ -35,7 +35,7 @@ class StudentInfoDialog(project: Project): DialogWrapper(project, true) {
 
     fun isGroupValid(): Boolean {
         val group = groupCell.component.text
-        return group.isNotBlank() && group.matches(Regex("[A-Za-zА-Яа-я-/]+"))
+        return group.isNotBlank() && group.matches(Regex("[A-Za-zА-Яа-я0-9-/\\s]+"))
     }
 
     fun isServerUrlValid(): Boolean {
