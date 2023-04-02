@@ -39,7 +39,7 @@ class StartAnalysisAction: AnAction() {
             Messages.showMessageDialog(
                 project,
                 errorMessage,
-                MessageConstants.DIALOG_INVALID_INFO,
+                MessageConstants.ERROR_INVALID_INFO_TITLE,
                 Messages.getErrorIcon()
             )
 

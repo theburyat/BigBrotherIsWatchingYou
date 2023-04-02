@@ -4,7 +4,9 @@ object MessageConstants {
     const val LOGGER_NAME = "Big brother"
 
     const val DIALOG_TITLE = "Enter Your Info"
-    const val DIALOG_INVALID_INFO = "Invalid Info"
+    const val ERROR_INVALID_INFO_TITLE = "Invalid Info"
+    const val ERROR_CAN_NOT_SEND_LOGS_TITLE = "Invalid Info"
+    const val ERROR_CAN_NOT_SEND_LOGS_MESSAGE = "Can't send info about your actions on specified server. Please, connect to teacher and say him/her about this situation"
 
     const val DIALOG_NAME_ROW = "Enter your name:"
     const val DIALOG_GROUP_ROW = "Enter your group number:"
