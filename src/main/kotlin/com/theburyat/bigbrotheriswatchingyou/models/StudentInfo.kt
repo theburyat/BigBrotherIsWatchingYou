@@ -3,17 +3,15 @@ package com.theburyat.bigbrotheriswatchingyou.models
 data class StudentInfo(
     var name: String?,
     var group: String?,
-    var email: String?,
+    var serverUrl: String?,
 ) {
-    constructor() : this(null, null, null)
-
-    fun clear() {
+    fun reset() {
         name = null
         group = null
-        email = null
+        serverUrl = null
     }
 
     fun isEmpty(): Boolean {
-        return name == null && group == null && email == null
+        return name == null && group == null && serverUrl == null
     }
 }

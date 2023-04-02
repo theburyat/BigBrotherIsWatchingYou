@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.theburyat.bigbrotheriswatchingyou.utils
 
 import com.intellij.codeInsight.lookup.LookupManagerListener
@@ -10,12 +12,12 @@ import com.theburyat.bigbrotheriswatchingyou.actionHandlers.*
 import com.theburyat.bigbrotheriswatchingyou.actions.*
 import com.theburyat.bigbrotheriswatchingyou.listeners.TrackingLookUpManagerListener
 import com.theburyat.bigbrotheriswatchingyou.listeners.TrackingRunManagerListener
-import com.theburyat.bigbrotheriswatchingyou.models.AnalysisContext
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 import java.util.logging.Logger
 
 object IdeEventsUtils {
 
-    fun setLoggerToUserActions(project: Project, actionManager: ActionManager, editorActionManager: EditorActionManager, logger: Logger) {
+    fun addActionsLogging(project: Project, actionManager: ActionManager, editorActionManager: EditorActionManager, logger: Logger) {
         saveOriginalHandlers(editorActionManager)
         saveOriginalActions(actionManager)
 
@@ -25,9 +27,9 @@ object IdeEventsUtils {
     }
 
     private fun subscribeOnMessagesFromBus(project: Project, logger: Logger) {
-        AnalysisContext.messageBusConnection = project.messageBus.connect()
-        AnalysisContext.messageBusConnection.subscribe(LookupManagerListener.TOPIC, TrackingLookUpManagerListener(logger))
-        AnalysisContext.messageBusConnection.subscribe(ExecutionManager.EXECUTION_TOPIC, TrackingRunManagerListener(logger))
+        AnalysisProcess.messageBusConnection = project.messageBus.connect()
+        AnalysisProcess.messageBusConnection.subscribe(LookupManagerListener.TOPIC, TrackingLookUpManagerListener(logger))
+        AnalysisProcess.messageBusConnection.subscribe(ExecutionManager.EXECUTION_TOPIC, TrackingRunManagerListener(logger))
     }
 
     private fun setTrackingHandlers(editorActionManager: EditorActionManager, logger: Logger) {
@@ -138,184 +140,184 @@ object IdeEventsUtils {
     }
 
     private fun saveOriginalHandlers(editorActionManager: EditorActionManager) {
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_ENTER] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_ENTER] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_ENTER)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_DELETE] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_DELETE] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_DELETE)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_BACKSPACE] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_BACKSPACE] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_BACKSPACE)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_COPY] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_COPY] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_COPY)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_PASTE] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_PASTE] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_PASTE)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_CUT] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_CUT] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_CUT)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_SELECT_ALL] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_SELECT_ALL] =
             editorActionManager.getActionHandler(IdeActions.ACTION_SELECT_ALL)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION)
 
-        AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION] =
+        AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION] =
             editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION)
 
-        AnalysisContext.originalTypeHandler = editorActionManager.typedAction.handler
+        AnalysisProcess.originalTypeHandler = editorActionManager.typedAction.handler
     }
 
     private fun saveOriginalActions(actionManager: ActionManager) {
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_UP)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION)
 
-        AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION] =
+        AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION] =
             actionManager.getAction(IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION)
     }
 
-    fun disableLoggerFromUserActions(actionManager: ActionManager, editorActionManager: EditorActionManager) {
+    fun disableActionsLogging(actionManager: ActionManager, editorActionManager: EditorActionManager) {
         unsubscribeFromMessageFromBus()
         removeTrackingActions(actionManager)
         removeTrackingHandlers(editorActionManager)
     }
 
     private fun unsubscribeFromMessageFromBus() {
-        AnalysisContext.messageBusConnection.disconnect()
+        AnalysisProcess.messageBusConnection.disconnect()
     }
 
     private fun removeTrackingHandlers(editorActionManager: EditorActionManager) {
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_ENTER,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_ENTER]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_ENTER]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_DELETE,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_DELETE]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_DELETE]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_BACKSPACE,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_BACKSPACE]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_BACKSPACE]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_COPY,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_COPY]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_COPY]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_PASTE,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_PASTE]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_PASTE]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_CUT,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_CUT]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_CUT]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_SELECT_ALL,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_SELECT_ALL]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_SELECT_ALL]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION]!!
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION,
-            AnalysisContext.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION]!!
+            AnalysisProcess.originalHandlers[IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION]!!
         )
 
-        editorActionManager.typedAction.setupHandler(AnalysisContext.originalTypeHandler)
+        editorActionManager.typedAction.setupHandler(AnalysisProcess.originalTypeHandler)
     }
 
     private fun removeTrackingActions(actionManager: ActionManager) {
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_UP,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_UP]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT]!!
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT,
-            AnalysisContext.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT]!!
+            AnalysisProcess.originalActions[IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT]!!
         )
     }
 }

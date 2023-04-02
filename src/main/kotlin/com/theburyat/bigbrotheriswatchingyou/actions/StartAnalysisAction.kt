@@ -8,7 +8,7 @@ import com.intellij.openapi.ui.Messages
 import com.theburyat.bigbrotheriswatchingyou.MessageConstants
 import com.theburyat.bigbrotheriswatchingyou.dialogs.StudentInfoDialog
 import com.theburyat.bigbrotheriswatchingyou.enums.AnalysisState
-import com.theburyat.bigbrotheriswatchingyou.models.AnalysisContext
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 import com.theburyat.bigbrotheriswatchingyou.utils.IdeEventsUtils
 
 class StartAnalysisAction: AnAction() {
@@ -16,7 +16,7 @@ class StartAnalysisAction: AnAction() {
     override fun update(e: AnActionEvent) {
         val project = e.project
         e.presentation.isVisible = project != null
-        e.presentation.isEnabled = project != null && AnalysisContext[project].state == AnalysisState.DISABLED
+        e.presentation.isEnabled = project != null && project.isOpen && AnalysisProcess.getCurrentContext().state == AnalysisState.DISABLED
     }
 
     override fun actionPerformed(e: AnActionEvent) {
@@ -26,22 +26,28 @@ class StartAnalysisAction: AnAction() {
 
         val dialog = StudentInfoDialog(project)
         val isDialogOk = dialog.showAndGet()
-        if (!isDialogOk || !dialog.isFilled()) {
-            val errorMessage =
-                if (isDialogOk) MessageConstants.studentInfoDialogInvalidMessage
-                else MessageConstants.studentInfoDialogSkippedMessage
 
+        val errorMessage = when {
+            !isDialogOk -> MessageConstants.DIALOG_INVALID_DIALOG
+            !dialog.isNameValid() -> MessageConstants.DIALOG_INVALID_NAME
+            !dialog.isGroupValid() -> MessageConstants.DIALOG_INVALID_GROUP
+            !dialog.isServerUrlValid() -> MessageConstants.DIALOG_INVALID_SERVER_URI
+            else -> null
+        }
+
+        if (errorMessage != null) {
             Messages.showMessageDialog(
                 project,
                 errorMessage,
-                MessageConstants.studentInfoDialogInvalidTitle,
+                MessageConstants.DIALOG_INVALID_INFO,
                 Messages.getErrorIcon()
             )
+
             return
         }
 
-        dialog.fillContextStudentInfo()
-        AnalysisContext.startAnalysis(project)
-        IdeEventsUtils.setLoggerToUserActions(project, actionManager, editorActionManager, AnalysisContext[project].logger!!)
+        AnalysisProcess.studentInfo = dialog.getStudentInfo()
+        AnalysisProcess.startAnalysis()
+        IdeEventsUtils.addActionsLogging(project, actionManager, editorActionManager, AnalysisProcess.getCurrentContext().logger!!)
     }
 }
