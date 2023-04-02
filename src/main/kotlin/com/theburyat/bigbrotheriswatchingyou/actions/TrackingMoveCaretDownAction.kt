@@ -2,13 +2,14 @@ package com.theburyat.bigbrotheriswatchingyou.actions
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.MoveCaretDownAction
+import com.theburyat.bigbrotheriswatchingyou.enums.UserAction
 import java.util.logging.Logger
 
 class TrackingMoveCaretDownAction(logger: Logger): MoveCaretDownAction() {
     private val _logger: Logger = logger
 
     override fun beforeActionPerformedUpdate(e: AnActionEvent) {
-        _logger.info("MoveCaretDown")
+        _logger.info(UserAction.MoveCaretDown.toString())
         super.beforeActionPerformedUpdate(e)
     }
 }

@@ -9,6 +9,9 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://jcenter.bintray.com")
+    }
 }
 
 // Configure Gradle IntelliJ Plugin
@@ -47,5 +50,5 @@ tasks {
 }
 
 dependencies {
-
+    implementation("khttp:khttp:1.0.0")
 }
