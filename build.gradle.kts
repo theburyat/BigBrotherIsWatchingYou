@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.theburyat"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("213")
-        untilBuild.set("223.*")
+        untilBuild.set("233.*")
     }
 
     signPlugin {

@@ -12,13 +12,13 @@
     </name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="theburyat16@gmail.com" url="https://www.mycompany.com">MyCompany</vendor>
+    <vendor email="theburyat16@gmail.com" url="https://www.theburyat.com">Theburyat</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description>
-        <![CDATA[Intellij plugin for detecting plagiarism.<br><em>Test HTML tag</em>]]>
+        <![CDATA[Intellij plugin for detecting plagiarism.<br><em>Big Brother Is Watching You</em>]]>
     </description>
 
     <!-- Product and plugin compatibility requirements.
