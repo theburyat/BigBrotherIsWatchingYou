@@ -6,13 +6,11 @@ import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
 import com.theburyat.bigbrotheriswatchingyou.enums.UserAction
-import java.util.logging.Logger
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 
-class TrackingEnterHandler(originalHandler: EditorActionHandler?, logger: Logger) : EnterHandler(originalHandler) {
-    private val _logger: Logger = logger
-
+class TrackingEnterHandler(originalHandler: EditorActionHandler?) : EnterHandler(originalHandler) {
     override fun doExecute(editor: Editor, caret: Caret?, dataContext: DataContext?) {
-        _logger.info(UserAction.Enter.toString())
+        AnalysisProcess.context.logger?.info(UserAction.Enter.toString())
         super.doExecute(editor, caret, dataContext)
     }
 }

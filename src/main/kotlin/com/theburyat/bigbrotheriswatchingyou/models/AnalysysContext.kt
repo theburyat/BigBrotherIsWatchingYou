@@ -9,13 +9,16 @@ class AnalysisContext(
     var logFile: Path?,
     var state: AnalysisState
 ) {
+    val copyCache = mutableListOf<String>()
+
     constructor() : this(null, null, AnalysisState.DISABLED)
 
     fun reset() {
         logger = null
         logFile = null
         state = AnalysisState.DISABLED
+        copyCache.clear()
     }
 
-    fun isEmpty() = logger == null && logFile == null && state == AnalysisState.DISABLED
+    fun isEmpty() = logger == null && logFile == null && state == AnalysisState.DISABLED && copyCache.isEmpty()
 }

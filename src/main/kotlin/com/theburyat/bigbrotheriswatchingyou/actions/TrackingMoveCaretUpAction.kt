@@ -3,13 +3,11 @@ package com.theburyat.bigbrotheriswatchingyou.actions
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.MoveCaretUpAction
 import com.theburyat.bigbrotheriswatchingyou.enums.UserAction
-import java.util.logging.Logger
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 
-class TrackingMoveCaretUpAction(logger: Logger): MoveCaretUpAction() {
-    private val _logger: Logger = logger
-
+class TrackingMoveCaretUpAction: MoveCaretUpAction() {
     override fun beforeActionPerformedUpdate(e: AnActionEvent) {
-        _logger.info(UserAction.MoveCaretUp.toString())
+        AnalysisProcess.context.logger?.info(UserAction.MoveCaretUp.toString())
         super.beforeActionPerformedUpdate(e)
     }
 }

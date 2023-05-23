@@ -16,7 +16,7 @@ class StartAnalysisAction: AnAction() {
     override fun update(e: AnActionEvent) {
         val project = e.project
         e.presentation.isVisible = project != null
-        e.presentation.isEnabled = project != null && project.isOpen && AnalysisProcess.getCurrentContext().state == AnalysisState.DISABLED
+        e.presentation.isEnabled = project != null && project.isOpen && AnalysisProcess.context.state == AnalysisState.DISABLED
     }
 
     override fun actionPerformed(e: AnActionEvent) {
@@ -48,6 +48,6 @@ class StartAnalysisAction: AnAction() {
 
         AnalysisProcess.studentInfo = dialog.getStudentInfo()
         AnalysisProcess.startAnalysis()
-        IdeEventsUtils.addActionsLogging(project, actionManager, editorActionManager, AnalysisProcess.getCurrentContext().logger!!)
+        IdeEventsUtils.addActionsLogging(project, actionManager, editorActionManager)
     }
 }

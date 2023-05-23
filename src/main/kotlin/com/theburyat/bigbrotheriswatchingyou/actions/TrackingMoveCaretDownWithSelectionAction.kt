@@ -3,13 +3,11 @@ package com.theburyat.bigbrotheriswatchingyou.actions
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.actions.MoveCaretDownWithSelectionAction
 import com.theburyat.bigbrotheriswatchingyou.enums.UserAction
-import java.util.logging.Logger
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 
-class TrackingMoveCaretDownWithSelectionAction(logger: Logger): MoveCaretDownWithSelectionAction() {
-    private val _logger: Logger = logger
-
+class TrackingMoveCaretDownWithSelectionAction: MoveCaretDownWithSelectionAction() {
     override fun beforeActionPerformedUpdate(e: AnActionEvent) {
-        _logger.info(UserAction.Select.toString())
+        AnalysisProcess.context.logger?.info(UserAction.Select.toString())
         super.beforeActionPerformedUpdate(e)
     }
 }

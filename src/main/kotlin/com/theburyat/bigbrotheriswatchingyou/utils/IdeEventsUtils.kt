@@ -13,129 +13,118 @@ import com.theburyat.bigbrotheriswatchingyou.actions.*
 import com.theburyat.bigbrotheriswatchingyou.listeners.TrackingLookUpManagerListener
 import com.theburyat.bigbrotheriswatchingyou.listeners.TrackingRunManagerListener
 import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
-import java.util.logging.Logger
 
 object IdeEventsUtils {
 
-    fun addActionsLogging(project: Project, actionManager: ActionManager, editorActionManager: EditorActionManager, logger: Logger) {
+    fun addActionsLogging(project: Project, actionManager: ActionManager, editorActionManager: EditorActionManager) {
         saveOriginalHandlers(editorActionManager)
         saveOriginalActions(actionManager)
 
-        subscribeOnMessagesFromBus(project, logger)
-        setTrackingActions(actionManager, logger)
-        setTrackingHandlers(editorActionManager, logger)
+        subscribeOnMessagesFromBus(project)
+        setTrackingActions(actionManager)
+        setTrackingHandlers(editorActionManager)
     }
 
-    private fun subscribeOnMessagesFromBus(project: Project, logger: Logger) {
+    private fun subscribeOnMessagesFromBus(project: Project) {
         AnalysisProcess.messageBusConnection = project.messageBus.connect()
-        AnalysisProcess.messageBusConnection.subscribe(LookupManagerListener.TOPIC, TrackingLookUpManagerListener(logger))
-        AnalysisProcess.messageBusConnection.subscribe(ExecutionManager.EXECUTION_TOPIC, TrackingRunManagerListener(logger))
+        AnalysisProcess.messageBusConnection.subscribe(LookupManagerListener.TOPIC, TrackingLookUpManagerListener())
+        AnalysisProcess.messageBusConnection.subscribe(ExecutionManager.EXECUTION_TOPIC, TrackingRunManagerListener())
     }
 
-    private fun setTrackingHandlers(editorActionManager: EditorActionManager, logger: Logger) {
+    private fun setTrackingHandlers(editorActionManager: EditorActionManager) {
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_ENTER,
-            TrackingEnterHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_ENTER), logger)
+            TrackingEnterHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_ENTER))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_DELETE,
-            TrackingDeleteHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_DELETE), logger)
+            TrackingDeleteHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_DELETE))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_BACKSPACE,
-            TrackingBackspaceHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_BACKSPACE), logger)
-        )
-
-        editorActionManager.setActionHandler(
-            IdeActions.ACTION_EDITOR_COPY,
-            TrackingCopyHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_COPY), logger)
-        )
-
-        editorActionManager.setActionHandler(
-            IdeActions.ACTION_EDITOR_PASTE,
-            TrackingPasteHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_PASTE), logger)
+            TrackingBackspaceHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_BACKSPACE))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_CUT,
-            TrackingCutHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_CUT), logger)
+            TrackingCutHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_CUT))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET,
-            TrackingSelectWordHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET), logger)
+            TrackingSelectWordHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_SELECT_WORD_AT_CARET))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_SELECT_ALL,
-            TrackingSelectAllHandler(editorActionManager.getActionHandler(IdeActions.ACTION_SELECT_ALL), logger)
+            TrackingSelectAllHandler(editorActionManager.getActionHandler(IdeActions.ACTION_SELECT_ALL))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION,
-            TrackingLineStartWithSelectionHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION), logger)
+            TrackingLineStartWithSelectionHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_MOVE_LINE_START_WITH_SELECTION))
         )
 
         editorActionManager.setActionHandler(
             IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION,
-            TrackingLineEndWithSelectionHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION), logger)
+            TrackingLineEndWithSelectionHandler(editorActionManager.getActionHandler(IdeActions.ACTION_EDITOR_MOVE_LINE_END_WITH_SELECTION))
         )
 
         val typedAction = editorActionManager.typedAction
-        typedAction.setupHandler(TrackingTypedHandler(typedAction.handler, logger))
+        typedAction.setupHandler(TrackingTypedHandler(typedAction.handler))
     }
 
-    private fun setTrackingActions(actionManager: ActionManager, logger: Logger) {
+    private fun setTrackingActions(actionManager: ActionManager) {
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_UP_WITH_SELECTION,
-            TrackingMoveCaretUpWithSelectionAction(logger)
+            TrackingMoveCaretUpWithSelectionAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN_WITH_SELECTION,
-            TrackingMoveCaretDownWithSelectionAction(logger)
+            TrackingMoveCaretDownWithSelectionAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT_WITH_SELECTION,
-            TrackingMoveCaretLeftWithSelectionAction(logger)
+            TrackingMoveCaretLeftWithSelectionAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT_WITH_SELECTION,
-            TrackingMoveCaretRightWithSelectionAction(logger)
+            TrackingMoveCaretRightWithSelectionAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_UP_WITH_SELECTION,
-            TrackingPageUpWithSelectionAction(logger)
+            TrackingPageUpWithSelectionAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_PAGE_DOWN_WITH_SELECTION,
-            TrackingPageDownWithSelectionAction(logger)
+            TrackingPageDownWithSelectionAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_UP,
-            TrackingMoveCaretUpAction(logger)
+            TrackingMoveCaretUpAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_DOWN,
-            TrackingMoveCaretDownAction(logger)
+            TrackingMoveCaretDownAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_LEFT,
-            TrackingMoveCaretLeftAction(logger)
+            TrackingMoveCaretLeftAction()
         )
 
         actionManager.replaceAction(
             IdeActions.ACTION_EDITOR_MOVE_CARET_RIGHT,
-            TrackingMoveCaretRightAction(logger)
+            TrackingMoveCaretRightAction()
         )
     }
 

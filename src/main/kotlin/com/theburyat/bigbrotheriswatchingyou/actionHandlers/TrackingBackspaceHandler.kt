@@ -6,13 +6,11 @@ import com.intellij.openapi.editor.Caret
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.actionSystem.EditorActionHandler
 import com.theburyat.bigbrotheriswatchingyou.enums.UserAction
-import java.util.logging.Logger
+import com.theburyat.bigbrotheriswatchingyou.models.AnalysisProcess
 
-class TrackingBackspaceHandler(originalHandler: EditorActionHandler?, logger: Logger) : BackspaceHandler(originalHandler) {
-    private val _logger: Logger = logger
-
+class TrackingBackspaceHandler(originalHandler: EditorActionHandler?) : BackspaceHandler(originalHandler) {
     override fun doExecute(editor: Editor, caret: Caret?, dataContext: DataContext?) {
-        _logger.info(UserAction.Delete.toString())
+        AnalysisProcess.context.logger?.info(UserAction.Delete.toString())
         super.doExecute(editor, caret, dataContext)
     }
 }

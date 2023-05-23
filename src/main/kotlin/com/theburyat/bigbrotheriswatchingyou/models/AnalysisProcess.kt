@@ -11,22 +11,13 @@ import com.theburyat.bigbrotheriswatchingyou.utils.PathUtils
 import java.util.logging.LogManager
 
 object AnalysisProcess {
-
-    lateinit var context: AnalysisContext
     lateinit var studentInfo: StudentInfo
     lateinit var originalTypeHandler: TypedActionHandler
     lateinit var messageBusConnection: MessageBusConnection
 
+    var context: AnalysisContext = AnalysisContext()
     var originalHandlers: MutableMap<String, EditorActionHandler> = mutableMapOf()
     var originalActions: MutableMap<String, AnAction> = mutableMapOf()
-
-    fun getCurrentContext(): AnalysisContext {
-        if (!::context.isInitialized) {
-            context = AnalysisContext()
-        }
-
-        return context
-    }
 
     fun startAnalysis() {
         val logFile = PathUtils.createTempFile()

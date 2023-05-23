@@ -7,6 +7,7 @@ enum class UserAction {
     Enter,
     Select,
     Paste,
+    PasteFromUnknownSource,
     Type,
     MoveCaretDown,
     MoveCaretLeft,
